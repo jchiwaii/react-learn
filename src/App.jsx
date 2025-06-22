@@ -63,14 +63,16 @@ const App = () => {
               No products available. Please add a product.
             </div>
           )}
-          {productList.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              handleDeleteProduct={handleDeleteProduct}
-              handleEditProduct={handleEditProduct}
-            />
-          ))}
+          <>
+            {productList.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                handleDeleteProduct={handleDeleteProduct}
+                handleEditProduct={handleEditProduct}
+              />
+            ))}
+          </>
         </div>
       </div>
       {isOpen && (
