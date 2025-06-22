@@ -19,6 +19,12 @@ const App = () => {
     setIsOpen(false);
   };
 
+  const handleDeleteProduct = (id) => {
+    setProductList((prevList) =>
+      prevList.filter((product) => product.id !== id)
+    );
+  };
+
   return (
     <>
       <div className="min-h-screen bg-gray-100">
@@ -39,7 +45,11 @@ const App = () => {
             </div>
           )}
           {productList.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              handleDeleteProduct={handleDeleteProduct}
+            />
           ))}
         </div>
       </div>
