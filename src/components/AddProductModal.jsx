@@ -12,7 +12,41 @@ const AddProductModal = ({ closeToggleModal }) => {
         >
           &times;
         </button>
-        Add Product Modal
+        <h1 className="text-4xl mb-6">Add Product</h1>
+        <form className="flex flex-col gap-4">
+          <div>
+            <label className="block mb-2 text-lg font-semibold">
+              Product ID
+              <input
+                type="text"
+                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter product ID"
+              />
+            </label>
+            <label className="block mb-2 text-lg font-semibold">
+              Product Name
+              <input
+                type="text"
+                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter product name"
+              />
+            </label>
+            <label className="block mb-4 text-lg font-semibold">
+              Quantity
+              <input
+                type="number"
+                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter quantity"
+              />
+            </label>
+            <button
+              type="submit"
+              className="bg-black text-white py-2 px-4 rounded-md text-semi-bold hover:bg-green-600 transition-colors duration-300 w-full"
+            >
+              Add Product
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
