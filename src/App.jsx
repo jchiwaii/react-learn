@@ -3,14 +3,13 @@ import ProductCard from "./components/ProductCard";
 import AddProductModal from "./components/AddProductModal";
 
 const App = () => {
-  const productList = [
-    { id: "001", name: "Pineapple", quantity: 12 },
-    { id: "002", name: "Apple", quantity: 20 },
-    { id: "003", name: "Banana", quantity: 15 },
-    { id: "004", name: "Orange", quantity: 10 },
-  ];
-
+  const [productList, setProductList] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const handleAddProduct = (newProduct) => {
+    setProductList((prevList) => [...prevList, newProduct]);
+    setIsOpen(false);
+  };
 
   const openToggleModal = () => {
     setIsOpen(true);
@@ -34,12 +33,22 @@ const App = () => {
           </button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+          {productList.length === 0 && (
+            <div className="col-span-full text-center text-gray-500">
+              No products available. Please add a product.
+            </div>
+          )}
           {productList.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
-      {isOpen && <AddProductModal closeToggleModal={closeToggleModal} />}
+      {isOpen && (
+        <AddProductModal
+          closeToggleModal={closeToggleModal}
+          handleAddProduct={handleAddProduct}
+        />
+      )}
     </>
   );
 };
