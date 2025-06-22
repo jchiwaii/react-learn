@@ -1,11 +1,11 @@
 import React from "react";
 
-const ProductCard = () => {
+const ProductCard = (product) => {
   return (
     <div className="border rounded-lg p-5 flex flex-col gap-2 font-bold m-5 w-[240px] text-2xl">
-      <span>001</span>
-      <span>Pineapple</span>
-      <span>12</span>
+      <span>{product.product.id}</span>
+      <span>{product.product.name}</span>
+      <span>{product.product.quantity}</span>
       <div className="flex flex-row gap-2 text-sm">
         <button
           type="button"
