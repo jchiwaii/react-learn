@@ -1,11 +1,25 @@
 import React from "react";
 
-const AddProductModal = ({ closeToggleModal, handleAddProduct }) => {
-  const [data, setData] = React.useState({
-    id: "",
-    name: "",
-    quantity: "",
-  });
+const AddProductModal = ({
+  closeToggleModal,
+  handleAddProduct,
+  selectedProduct,
+  handleUpdateProduct,
+}) => {
+  const [data, setData] = React.useState(
+    selectedProduct || {
+      id: "",
+      name: "",
+      quantity: "",
+      isActive: false,
+    }
+  );
+
+  React.useEffect(() => {
+    if (selectedProduct) {
+      setData(selectedProduct);
+    }
+  }, [selectedProduct]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,8 +31,20 @@ const AddProductModal = ({ closeToggleModal, handleAddProduct }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (selectedProduct) {
+      handleUpdateProduct(data);
+    } else {
+      handleAddProduct(data);
+    }
     console.log("Product Added:", data);
-    handleAddProduct(data);
+  };
+
+  const handleIsActive = (e) => {
+    const { name, checked } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: checked,
+    }));
   };
 
   return (
@@ -32,17 +58,21 @@ const AddProductModal = ({ closeToggleModal, handleAddProduct }) => {
         >
           &times;
         </button>
-        <h1 className="text-4xl mb-6">Add Product</h1>
+        <h1 className="text-4xl mb-6">
+          {selectedProduct ? "Edit Product" : "Add Product"}
+        </h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
             <label className="block mb-2 text-lg font-semibold">
               Product ID
               <input
                 type="text"
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-amber-50"
                 placeholder="Enter product ID"
                 name="id"
                 onChange={handleChange}
+                value={data.id}
+                disabled={selectedProduct}
               />
             </label>
             <label className="block mb-2 text-lg font-semibold">
@@ -53,6 +83,7 @@ const AddProductModal = ({ closeToggleModal, handleAddProduct }) => {
                 placeholder="Enter product name"
                 name="name"
                 onChange={handleChange}
+                value={data.name}
               />
             </label>
             <label className="block mb-4 text-lg font-semibold">
@@ -63,13 +94,23 @@ const AddProductModal = ({ closeToggleModal, handleAddProduct }) => {
                 placeholder="Enter quantity"
                 name="quantity"
                 onChange={handleChange}
+                value={data.quantity}
               />
             </label>
+            <div>
+              <input
+                type="checkbox"
+                name="isActive"
+                checked={data.isActive}
+                onChange={handleIsActive}
+              ></input>
+              <label> Activate Product</label>
+            </div>
             <button
               type="submit"
               className="bg-black text-white py-2 px-4 rounded-md text-semi-bold hover:bg-green-600 transition-colors duration-300 w-full"
             >
-              Add Product
+              {selectedProduct ? "Update Product" : "Add Product"}
             </button>
           </div>
         </form>

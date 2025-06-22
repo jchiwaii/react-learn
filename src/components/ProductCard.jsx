@@ -1,15 +1,17 @@
 import React from "react";
 
-const ProductCard = ({ product, handleDeleteProduct }) => {
+const ProductCard = ({ product, handleDeleteProduct, handleEditProduct }) => {
   return (
     <div className="border rounded-lg p-5 flex flex-col gap-2 font-bold m-5 w-[240px] text-2xl">
       <span>{product.id}</span>
       <span>{product.name}</span>
       <span>${product.quantity}</span>
+      <span>{product.isActive.toString()}</span>
       <div className="flex flex-row gap-2 text-sm">
         <button
           type="button"
           className="border rounded-md px-2 py-1 font-semibold w-full hover:outline-none"
+          onClick={() => handleEditProduct(product.id)}
         >
           Edit
         </button>

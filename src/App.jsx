@@ -5,6 +5,7 @@ import AddProductModal from "./components/AddProductModal";
 const App = () => {
   const [productList, setProductList] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState(); // For future use, if needed);
 
   const handleAddProduct = (newProduct) => {
     setProductList((prevList) => [...prevList, newProduct]);
@@ -17,12 +18,30 @@ const App = () => {
 
   const closeToggleModal = () => {
     setIsOpen(false);
+    setSelectedProduct();
   };
 
   const handleDeleteProduct = (id) => {
     setProductList((prevList) =>
       prevList.filter((product) => product.id !== id)
     );
+  };
+
+  const handleEditProduct = (productId) => {
+    const productToEdit = productList.find(
+      (product) => product.id === productId
+    );
+    setSelectedProduct(productToEdit);
+    setIsOpen(true);
+  };
+
+  const handleUpdateProduct = (updatedProduct) => {
+    console.log("Product Updated:", updatedProduct);
+    const updateProductList = productList.map((p) =>
+      p.id === updatedProduct.id ? updatedProduct : p
+    );
+    setProductList(updateProductList);
+    closeToggleModal();
   };
 
   return (
@@ -49,6 +68,7 @@ const App = () => {
               key={product.id}
               product={product}
               handleDeleteProduct={handleDeleteProduct}
+              handleEditProduct={handleEditProduct}
             />
           ))}
         </div>
@@ -57,6 +77,8 @@ const App = () => {
         <AddProductModal
           closeToggleModal={closeToggleModal}
           handleAddProduct={handleAddProduct}
+          selectedProduct={selectedProduct}
+          handleUpdateProduct={handleUpdateProduct}
         />
       )}
     </>
